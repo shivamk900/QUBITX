@@ -1,51 +1,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-
-const challenges = [
-  {
-    id: 'open-innovation',
-    title: 'Open Innovation',
-    description: 'Create groundbreaking solutions that push technological boundaries across any domain.',
-    icon: '🎯',
-    color: 'from-blue-500 to-purple-500'
-  },
-  {
-    id: 'ai-ml',
-    title: 'AI & Machine Learning',
-    description: 'Develop intelligent systems that can learn, adapt, and solve complex problems.',
-    icon: '🤖',
-    color: 'from-cyan-500 to-blue-500'
-  },
-  {
-    id: 'health-tech',
-    title: 'Health-Tech',
-    description: 'Transform healthcare with innovative technological solutions.',
-    icon: '🏥',
-    color: 'from-green-500 to-emerald-500'
-  },
-  {
-    id: 'mid-tech',
-    title: 'Mid-Tech',
-    description: 'Bridge traditional industries with cutting-edge technology solutions.',
-    icon: '🔄',
-    color: 'from-purple-500 to-pink-500'
-  },
-  {
-    id: 'edu-tech',
-    title: 'Edu-Tech',
-    description: 'Revolutionize learning through innovative educational technology.',
-    icon: '📚',
-    color: 'from-orange-500 to-red-500'
-  },
-  {
-    id: 'fin-tech',
-    title: 'Fin-Tech',
-    description: 'Innovate financial services with next-generation technology.',
-    icon: '💰',
-    color: 'from-yellow-500 to-orange-500'
-  }
-];
+import { problemStatementsData } from '@/utils/data';
 
 const ProblemStatementSection = () => {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
@@ -73,7 +29,7 @@ const ProblemStatementSection = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {challenges.map((challenge, index) => (
+          {problemStatementsData.map((challenge, index) => (
             <motion.div
               key={challenge.id}
               initial={{ opacity: 0, y: 20 }}

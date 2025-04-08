@@ -1,5 +1,7 @@
 import { LinkedinIcon, TwitterIcon, GlobeIcon } from 'lucide-react';
 
+import { organizersData } from '@/utils/data';
+
 interface Social {
   linkedin?: string;
   twitter?: string;
@@ -53,53 +55,6 @@ const OrganizerCard = ({ name, role, company, image, socials }: OrganizerProps) 
 };
 
 const OrganizersSection = () => {
-  const organizers: OrganizerProps[] = [
-    {
-      name: "Dr. Sarah Chen",
-      role: "Event Director",
-      company: "TechNova Labs",
-      image: "/placeholder.svg",
-      socials: {
-        linkedin: "#",
-        twitter: "#",
-        website: "#"
-      }
-    },
-    {
-      name: "Marcus Lee",
-      role: "Technical Lead",
-      company: "CryptoFuture",
-      image: "/placeholder.svg",
-      socials: {
-        linkedin: "#",
-        twitter: "#",
-        website: "#"
-      }
-    },
-    {
-      name: "Alex Morgan",
-      role: "Operations Manager",
-      company: "Dimension XR",
-      image: "/placeholder.svg",
-      socials: {
-        linkedin: "#",
-        twitter: "#",
-        website: "#"
-      }
-    },
-    {
-      name: "Zoe Williams",
-      role: "Partnerships Lead",
-      company: "Neomorphic UI",
-      image: "/placeholder.svg",
-      socials: {
-        linkedin: "#",
-        twitter: "#",
-        website: "#"
-      }
-    }
-  ];
-
   return (
     <section id="organizers" className="py-20 relative overflow-hidden">
       {/* Tech-themed background elements */}
@@ -124,7 +79,7 @@ const OrganizersSection = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {organizers.map((organizer, index) => (
+          {organizersData.map((organizer, index) => (
             <OrganizerCard key={index} {...organizer} />
           ))}
         </div>

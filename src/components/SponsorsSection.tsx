@@ -1,4 +1,4 @@
-
+import { sponsorsData } from "@/utils/data";
 const SponsorLogo = ({ src, alt, tier }) => {
   let sizeClass = "w-28 h-28";
   if (tier === "gold") {
@@ -19,26 +19,6 @@ const SponsorLogo = ({ src, alt, tier }) => {
 };
 
 const SponsorsSection = () => {
-  const sponsors = {
-    gold: [
-      { src: "/placeholder.svg", alt: "TechNova" },
-      { src: "/placeholder.svg", alt: "CyberSys" },
-    ],
-    silver: [
-      { src: "/placeholder.svg", alt: "FutureStack" },
-      { src: "/placeholder.svg", alt: "Quantum Labs" },
-      { src: "/placeholder.svg", alt: "NeoCode" },
-      { src: "/placeholder.svg", alt: "Digital Pulse" },
-    ],
-    bronze: [
-      { src: "/placeholder.svg", alt: "ByteWorks" },
-      { src: "/placeholder.svg", alt: "CodeSphere" },
-      { src: "/placeholder.svg", alt: "TechFront" },
-      { src: "/placeholder.svg", alt: "DataFlow" },
-      { src: "/placeholder.svg", alt: "CloudNine" },
-      { src: "/placeholder.svg", alt: "HexCore" },
-    ]
-  };
 
   return (
     <section className="py-20 bg-cyber-dark bg-grid">
@@ -56,9 +36,15 @@ const SponsorsSection = () => {
         </div>
 
         <div className="mb-12">
+          <h3 className="text-xl font-bold text-center mb-6 text-neon-green">Diamond Sponsors</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {sponsorsData.diamond.map((sponsor, index) => (
+              <SponsorLogo key={index} src={sponsor.src} alt={sponsor.alt} tier="platinum" />
+            ))}
+          </div>
           <h3 className="text-xl font-bold text-center mb-6 text-neon-cyan">Gold Sponsors</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {sponsors.gold.map((sponsor, index) => (
+            {sponsorsData.gold.map((sponsor, index) => (
               <SponsorLogo key={index} src={sponsor.src} alt={sponsor.alt} tier="gold" />
             ))}
           </div>
@@ -67,7 +53,7 @@ const SponsorsSection = () => {
         <div className="mb-12">
           <h3 className="text-xl font-bold text-center mb-6 text-neon-blue">Silver Sponsors</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {sponsors.silver.map((sponsor, index) => (
+            {sponsorsData.silver.map((sponsor, index) => (
               <SponsorLogo key={index} src={sponsor.src} alt={sponsor.alt} tier="silver" />
             ))}
           </div>
@@ -76,7 +62,7 @@ const SponsorsSection = () => {
         <div>
           <h3 className="text-xl font-bold text-center mb-6 text-neon-purple">Bronze Sponsors</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {sponsors.bronze.map((sponsor, index) => (
+            {sponsorsData.bronze.map((sponsor, index) => (
               <SponsorLogo key={index} src={sponsor.src} alt={sponsor.alt} tier="bronze" />
             ))}
           </div>

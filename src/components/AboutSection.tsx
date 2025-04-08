@@ -1,6 +1,6 @@
 
 import { Shield, Zap, Code, Share2 } from 'lucide-react';
-
+import { aboutData } from '@/utils/data';
 const FeatureCard = ({ icon: Icon, title, description }) => {
   return (
     <div className="bg-cyber-dark p-6 rounded-lg cyberpunk-border group hover:translate-y-[-5px] transition-all duration-300">
@@ -14,29 +14,6 @@ const FeatureCard = ({ icon: Icon, title, description }) => {
 };
 
 const AboutSection = () => {
-  const features = [
-    {
-      icon: Code,
-      title: "Cutting-Edge Challenges",
-      description: "Tackle real-world problems with the latest technologies in AI, blockchain, and more."
-    },
-    {
-      icon: Zap,
-      title: "24-Hour Sprint",
-      description: "Push your creative limits in this intense coding marathon designed to spark innovation."
-    },
-    {
-      icon: Shield,
-      title: "Mentorship & Support",
-      description: "Get guidance from industry experts to help bring your ideas to life."
-    },
-    {
-      icon: Share2,
-      title: "Networking Opportunities",
-      description: "Connect with fellow tech enthusiasts, sponsors, and potential employers."
-    }
-  ];
-
   return (
     <section id="about" className="py-20 relative">
       {/* Decorative elements */}
@@ -57,7 +34,7 @@ const AboutSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, index) => (
+          {aboutData.map((feature, index) => (
             <FeatureCard 
               key={index}
               icon={feature.icon}

@@ -1,6 +1,6 @@
 
 import { LinkedinIcon, TwitterIcon, GlobeIcon } from 'lucide-react';
-
+import { speakersDate } from '@/utils/data';
 const SpeakerCard = ({ name, role, company, image, socials }) => {
   return (
     <div className="group">
@@ -40,52 +40,6 @@ const SpeakerCard = ({ name, role, company, image, socials }) => {
 };
 
 const SpeakersSection = () => {
-  const speakers = [
-    {
-      name: "Dr. Sarah Chen",
-      role: "AI Research Lead",
-      company: "TechNova Labs",
-      image: "/placeholder.svg",
-      socials: {
-        linkedin: "#",
-        twitter: "#",
-        website: "#"
-      }
-    },
-    {
-      name: "Marcus Lee",
-      role: "Blockchain Expert",
-      company: "CryptoFuture",
-      image: "/placeholder.svg",
-      socials: {
-        linkedin: "#",
-        twitter: "#",
-        website: "#"
-      }
-    },
-    {
-      name: "Alex Morgan",
-      role: "VR/AR Specialist",
-      company: "Dimension XR",
-      image: "/placeholder.svg",
-      socials: {
-        linkedin: "#",
-        twitter: "#",
-        website: "#"
-      }
-    },
-    {
-      name: "Zoe Williams",
-      role: "Product Designer",
-      company: "Neomorphic UI",
-      image: "/placeholder.svg",
-      socials: {
-        linkedin: "#",
-        twitter: "#",
-        website: "#"
-      }
-    }
-  ];
 
   return (
     <section id="speakers" className="py-20 relative">
@@ -107,7 +61,7 @@ const SpeakersSection = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {speakers.map((speaker, index) => (
+          {speakersDate.map((speaker, index) => (
             <SpeakerCard key={index} {...speaker} />
           ))}
         </div>

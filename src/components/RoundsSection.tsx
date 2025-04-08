@@ -1,53 +1,15 @@
-import { motion } from 'framer-motion';
-import { Clock, Code, Trophy, Users } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Clock, Code, Trophy, Users } from "lucide-react";
+import { roundsData } from "@/utils/data";
+const HandleIcon = ({ icon: Icon, className }) => {
+  return <Icon size={28} className={className} />;
+};
 
 const RoundsSection = () => {
-  const rounds = [
-    {
-      number: 1,
-      title: "Ideation & Team Formation",
-      description: "Submit your innovative project idea and form your dream team. Present your concept to mentors for initial feedback.",
-      timeline: "48 Hours",
-      icon: <Users className="w-6 h-6 text-neon-blue" />,
-      details: [
-        "Team registration & idea submission",
-        "Mentor matching & initial guidance",
-        "Project scope definition",
-        "Technical stack planning"
-      ]
-    },
-    {
-      number: 2,
-      title: "Development & Mentorship",
-      description: "Build your prototype with continuous support from industry experts. Regular checkpoints to ensure you're on track.",
-      timeline: "72 Hours",
-      icon: <Code className="w-6 h-6 text-neon-purple" />,
-      details: [
-        "Intensive coding & development",
-        "One-on-one mentorship sessions",
-        "Technical workshops",
-        "Progress presentations"
-      ]
-    },
-    {
-      number: 3,
-      title: "Final Presentation & Judging",
-      description: "Showcase your solution to our panel of judges. Demonstrate the impact and innovation of your project.",
-      timeline: "24 Hours",
-      icon: <Trophy className="w-6 h-6 text-neon-pink" />,
-      details: [
-        "Project demonstration",
-        "Technical documentation",
-        "Final presentation",
-        "Awards ceremony"
-      ]
-    }
-  ];
-
   return (
     <section id="rounds" className="py-20 relative overflow-hidden">
       <div className="container mx-auto px-4">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -60,12 +22,13 @@ const RoundsSection = () => {
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink mx-auto mb-8"></div>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Journey through three exciting rounds to build your next breakthrough innovation
+            Journey through three exciting rounds to build your next
+            breakthrough innovation
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {rounds.map((round, index) => (
+          {roundsData.map((round, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -80,12 +43,16 @@ const RoundsSection = () => {
                   <span className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-purple">
                     {round.number}
                   </span>
-                  {round.icon}
+                  <HandleIcon icon={round.icon} className={round.className} />
                 </div>
-                
-                <h3 className="text-2xl font-bold mb-4 text-white">{round.title}</h3>
-                <p className="text-muted-foreground mb-6">{round.description}</p>
-                
+
+                <h3 className="text-2xl font-bold mb-4 text-white">
+                  {round.title}
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  {round.description}
+                </p>
+
                 <div className="flex items-center mb-6 text-neon-blue">
                   <Clock className="w-5 h-5 mr-2" />
                   <span>{round.timeline}</span>
@@ -93,7 +60,10 @@ const RoundsSection = () => {
 
                 <ul className="space-y-3">
                   {round.details.map((detail, idx) => (
-                    <li key={idx} className="flex items-center text-muted-foreground">
+                    <li
+                      key={idx}
+                      className="flex items-center text-muted-foreground"
+                    >
                       <span className="text-neon-purple mr-2">▹</span>
                       {detail}
                     </li>
