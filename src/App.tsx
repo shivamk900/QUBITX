@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
+import EventAdminPanel from './pages/EventAdminPanel';
 import NotFound from "./pages/NotFound";
 
 // Create a client
@@ -32,10 +33,12 @@ const App = () => {
               <div className="data-stream fixed inset-0 pointer-events-none z-0"></div>
               
               <div className="relative z-10">
-                <BrowserRouter>
+                <BrowserRouter basename='/QUBITX'>
                   <Routes>
-                    <Route path="/QUBITX" element={<Index />} />
+                    <Route path="" element={<Index />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="/admin" element={<EventAdminPanel />} />
+                    {/* Catch-all route for 404 Not Found */}
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </BrowserRouter>
