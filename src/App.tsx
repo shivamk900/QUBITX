@@ -20,7 +20,6 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
-  // hey
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
