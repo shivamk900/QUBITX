@@ -11,6 +11,8 @@ interface ScheduleCardProps {
   location: string;
 }
 
+const API_URL = 'https://qubitx-backend.onrender.com/api/schedule';
+
 const ScheduleCard = ({
   time,
   title,
@@ -45,7 +47,7 @@ const ScheduleSection = () => {
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const response = await axios.get("http://192.168.186.252:5000/api/schedule");
+        const response = await axios.get(API_URL);
         const rawData = response.data;
   
         // Transform into: { day1: [...], day2: [...] }

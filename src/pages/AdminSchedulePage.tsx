@@ -19,13 +19,15 @@ interface ScheduleData {
   events: ScheduleEvent[];
 }
 
+const API_URL = 'https://qubitx-backend.onrender.com/api/schedule';
+
 export default function ScheduleAdminPanel() {
   const [scheduleData, setScheduleData] = useState<ScheduleData[]>([]);
   const [newDay, setNewDay] = useState("");
 
   const fetchSchedule = async () => {
     try {
-      const res = await axios.get("http://192.168.186.252:5000/api/schedule");
+      const res = await axios.get(API_URL);
       setScheduleData(res.data);
     } catch (err) {
       console.error("Error fetching schedule", err);
@@ -67,7 +69,7 @@ export default function ScheduleAdminPanel() {
 
   const handleSaveDay = async (day: string, events: ScheduleEvent[]) => {
     try {
-      await axios.put(`http://192.168.186.252:5000/api/schedule/${day}`, {
+      await axios.put(`${API_URL}/${day}`, {
         events,
       });
       alert(`Schedule for ${day} updated successfully!`);
@@ -98,7 +100,7 @@ export default function ScheduleAdminPanel() {
   
     try {
       // Optional: call your backend delete route
-      await axios.delete(`http://192.168.186.252:5000/api/schedule/${day}`);
+      await axios.delete(`${API_URL}/${day}`);
     } catch (err) {
       console.error("Error deleting day", err);
       alert("Failed to delete day from server.");
@@ -107,8 +109,11 @@ export default function ScheduleAdminPanel() {
   
     // Update local state
     setScheduleData((prev) => prev.filter((d) => d.day !== day));
-  };
-  
+  };  
+
+  const handleAdminAccess = async () => {
+    localStorage.setItem("admin-auth", "false");
+  }
 
   return (
     <div className="max-w-5xl mx-auto py-10 px-4">
@@ -237,6 +242,10 @@ export default function ScheduleAdminPanel() {
                   >
                     Save Changes
                   </Button>
+                  {/* <Button className="px-6 py-2 bg-red-600 text-white hover:bg-red-700 rounded-xl"
+                    onClick={handleAdminAccess}>
+                    Remove Admin Access
+                  </Button> */}
                 </div>
               </div>
             </TabsContent>
