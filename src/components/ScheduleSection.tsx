@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Clock, Calendar, MapPin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { scheduleData } from "@/utils/data";
+
 interface ScheduleCardProps {
   time: string;
   title: string;
   description: string;
-  speaker?: string; // Making speaker optional
+  speaker?: string;
   location: string;
 }
 
@@ -38,6 +39,38 @@ const ScheduleCard = ({
 };
 
 const ScheduleSection = () => {
+  const [scheduleData, setScheduleData] = useState<Record<string, any[]>>({});
+  const [days, setDays] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      try {
+        const response = await axios.get("http://192.168.186.252:5000/api/schedule");
+        const rawData = response.data;
+  
+        // Transform into: { day1: [...], day2: [...] }
+        const transformed: Record<string, any[]> = {};
+        rawData.forEach((dayObj: any) => {
+          transformed[dayObj.day] = dayObj.events;
+        });
+  
+        setScheduleData(transformed);
+        setDays(Object.keys(transformed));
+      } catch (error) {
+        console.error("Error fetching schedule:", error);
+      }
+    };
+  
+    fetchSchedule();
+  }, []);
+  
+
+  const gridCols = {
+    1: "grid-cols-1",
+    2: "grid-cols-2",
+    3: "grid-cols-3",
+    4: "grid-cols-4",
+  }[days.length] || "grid-cols-2";
 
   return (
     <section id="schedule" className="py-20 bg-cyber-dark">
@@ -56,64 +89,45 @@ const ScheduleSection = () => {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <Tabs defaultValue="day1" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8 bg-cyber-darker">
-              <TabsTrigger
-                value="day1"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-neon-blue/20 data-[state=active]:to-neon-purple/20 data-[state=active]:text-white"
-              >
-                <div className="flex flex-col items-center">
-                  <Calendar size={18} className="mb-1" />
-                  <span>Day 1</span>
-                  <span className="text-xs text-muted-foreground">July 14</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger
-                value="day2"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-neon-blue/20 data-[state=active]:to-neon-purple/20 data-[state=active]:text-white"
-              >
-                <div className="flex flex-col items-center">
-                  <Calendar size={18} className="mb-1" />
-                  <span>Day 2</span>
-                  <span className="text-xs text-muted-foreground">July 15</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger
-                value="day3"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-neon-blue/20 data-[state=active]:to-neon-purple/20 data-[state=active]:text-white"
-              >
-                <div className="flex flex-col items-center">
-                  <Calendar size={18} className="mb-1" />
-                  <span>Day 3</span>
-                  <span className="text-xs text-muted-foreground">July 16</span>
-                </div>
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="day1" className="mt-0">
-              <div className="space-y-0">
-                {scheduleData.day1.map((item, index) => (
-                  <ScheduleCard key={index} {...item} />
+          {days.length > 0 ? (
+            <Tabs defaultValue={days[0]} className="w-full">
+              <TabsList className={`grid w-full ${gridCols} mb-8 bg-cyber-darker`}>
+                {days.map((day, index) => (
+                  <TabsTrigger
+                    key={day}
+                    value={day}
+                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-neon-blue/20 data-[state=active]:to-neon-purple/20 data-[state=active]:text-white"
+                  >
+                    <div className="flex flex-col items-center">
+                      <Calendar size={18} className="mb-1" />
+                      <span>{`Day ${index + 1}`}</span>
+                      <span className="text-xs text-muted-foreground">{`July ${
+                        14 + index
+                      }`}</span>
+                    </div>
+                  </TabsTrigger>
                 ))}
-              </div>
-            </TabsContent>
+              </TabsList>
 
-            <TabsContent value="day2" className="mt-0">
-              <div className="space-y-0">
-                {scheduleData.day2.map((item, index) => (
-                  <ScheduleCard key={index} {...item} />
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="day3" className="mt-0">
-              <div className="space-y-0">
-                {scheduleData.day3.map((item, index) => (
-                  <ScheduleCard key={index} {...item} />
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
+              {days.map((day) => (
+                <TabsContent key={day} value={day} className="mt-0">
+                  <div className="space-y-0">
+                    {scheduleData[day].length > 0 ? (
+                      scheduleData[day].map((item, index) => (
+                        <ScheduleCard key={index} {...item} />
+                      ))
+                    ) : (
+                      <p className="text-center text-muted-foreground">
+                        No schedule available for this day.
+                      </p>
+                    )}
+                  </div>
+                </TabsContent>
+              ))}
+            </Tabs>
+          ) : (
+            <p className="text-center text-muted-foreground">Loading schedule...</p>
+          )}
         </div>
       </div>
     </section>

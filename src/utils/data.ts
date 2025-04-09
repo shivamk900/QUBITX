@@ -186,39 +186,6 @@ export const scheduleData = {
             location: "Food Court"
         }
     ],
-    day3: [
-        {
-            time: "10:00 AM",
-            title: "Coding Stops",
-            description: "Finish your projects and prepare presentations",
-            location: "All Zones"
-        },
-        {
-            time: "11:00 AM - 2:00 PM",
-            title: "Project Presentations",
-            description: "Present your solutions to the judges",
-            location: "Cyber Auditorium"
-        },
-        {
-            time: "2:00 PM - 3:00 PM",
-            title: "Judges Deliberation",
-            description: "Judges evaluate the projects",
-            location: "Judges Room"
-        },
-        {
-            time: "3:00 PM - 4:00 PM",
-            title: "Awards Ceremony",
-            description: "Winners announcement and prizes",
-            speaker: "ByteBlitz Team",
-            location: "Main Stage"
-        },
-        {
-            time: "4:00 PM - 5:00 PM",
-            title: "Closing Remarks & Afterparty",
-            description: "Celebrate the end of a successful hackathon",
-            location: "Main Hall"
-        }
-    ]
 };
 
 // Speakers Data
