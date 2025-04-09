@@ -21,6 +21,7 @@ interface ScheduleData {
 
 export default function ScheduleAdminPanel() {
   const [scheduleData, setScheduleData] = useState<ScheduleData[]>([]);
+  const [newDay, setNewDay] = useState("");
 
   const fetchSchedule = async () => {
     try {
@@ -76,86 +77,172 @@ export default function ScheduleAdminPanel() {
     }
   };
 
+  const handleAddDay = () => {
+    if (!newDay.trim()) {
+      alert("Please enter a valid day name.");
+      return;
+    }
+
+    const exists = scheduleData.find((d) => d.day === newDay.trim());
+    if (exists) {
+      alert("Day already exists.");
+      return;
+    }
+
+    setScheduleData((prev) => [...prev, { day: newDay.trim(), events: [] }]);
+    setNewDay("");
+  };
+
+  const handleRemoveDay = async (day: string) => {
+    if (!window.confirm(`Are you sure you want to delete ${day}?`)) return;
+  
+    try {
+      // Optional: call your backend delete route
+      await axios.delete(`http://192.168.186.252:5000/api/schedule/${day}`);
+    } catch (err) {
+      console.error("Error deleting day", err);
+      alert("Failed to delete day from server.");
+      return;
+    }
+  
+    // Update local state
+    setScheduleData((prev) => prev.filter((d) => d.day !== day));
+  };
+  
+
   return (
     <div className="max-w-5xl mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold text-center mb-6">Schedule Admin Panel</h1>
+      <h1 className="text-3xl font-bold text-center mb-6">
+        Schedule Admin Panel
+      </h1>
 
-      <Tabs defaultValue={scheduleData[0]?.day || ""}>
-        <TabsList className="flex justify-center mb-6 flex-wrap gap-2">
-          {scheduleData.map((day) => (
-            <TabsTrigger key={day.day} value={day.day}>
-              {day.day.toUpperCase()}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+      <div className="flex items-center gap-4 mb-6 justify-center">
+        <Input
+          placeholder="Enter new day (e.g., day3)"
+          value={newDay}
+          onChange={(e) => setNewDay(e.target.value)}
+          className="max-w-xs"
+        />
+        <Button onClick={handleAddDay}>Add New Day</Button>
+      </div>
 
-        {scheduleData.map((day, dayIndex) => (
-          <TabsContent key={day.day} value={day.day}>
-            <div className="space-y-6">
-              {day.events.map((event, eventIndex) => (
-                <Card key={eventIndex}>
-                  <CardContent className="p-4 space-y-3">
-                    <Input
-                      placeholder="Time"
-                      value={event.time}
-                      onChange={(e) =>
-                        handleChange(dayIndex, eventIndex, "time", e.target.value)
-                      }
-                    />
-                    <Input
-                      placeholder="Title"
-                      value={event.title}
-                      onChange={(e) =>
-                        handleChange(dayIndex, eventIndex, "title", e.target.value)
-                      }
-                    />
-                    <Textarea
-                      placeholder="Description"
-                      value={event.description}
-                      onChange={(e) =>
-                        handleChange(dayIndex, eventIndex, "description", e.target.value)
-                      }
-                    />
-                    <Input
-                      placeholder="Speaker (optional)"
-                      value={event.speaker || ""}
-                      onChange={(e) =>
-                        handleChange(dayIndex, eventIndex, "speaker", e.target.value)
-                      }
-                    />
-                    <Input
-                      placeholder="Location"
-                      value={event.location}
-                      onChange={(e) =>
-                        handleChange(dayIndex, eventIndex, "location", e.target.value)
-                      }
-                    />
-                    <div className="flex justify-end">
-                      <Button
-                        variant="destructive"
-                        onClick={() => handleRemoveEvent(dayIndex, eventIndex)}
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-              <div className="flex justify-center">
-                <Button onClick={() => handleAddEvent(dayIndex)}>Add Event</Button>
-              </div>
-              <div className="flex justify-center mt-6">
+      {scheduleData.length > 0 && (
+        <Tabs defaultValue={scheduleData[0]?.day}>
+          <TabsList className="flex justify-center mb-6 flex-wrap gap-2">
+            {scheduleData.map((day, index) => (
+              <div key={day.day} className="flex items-center space-x-1">
+                <TabsTrigger value={day.day}>
+                  {day.day.toUpperCase()}
+                </TabsTrigger>
                 <Button
-                  className="px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-xl"
-                  onClick={() => handleSaveDay(day.day, day.events)}
+                  variant="destructive"
+                  size="sm"
+                  className="px-2 py-1 text-xs"
+                  onClick={() => handleRemoveDay(day.day)}
                 >
-                  Save Changes
+                  ✕
                 </Button>
               </div>
-            </div>
-          </TabsContent>
-        ))}
-      </Tabs>
+            ))}
+          </TabsList>
+
+          {scheduleData.map((day, dayIndex) => (
+            <TabsContent key={day.day} value={day.day}>
+              <div className="space-y-6">
+                {day.events.map((event, eventIndex) => (
+                  <Card key={eventIndex}>
+                    <CardContent className="p-4 space-y-3">
+                      <Input
+                        placeholder="Time"
+                        value={event.time}
+                        onChange={(e) =>
+                          handleChange(
+                            dayIndex,
+                            eventIndex,
+                            "time",
+                            e.target.value
+                          )
+                        }
+                      />
+                      <Input
+                        placeholder="Title"
+                        value={event.title}
+                        onChange={(e) =>
+                          handleChange(
+                            dayIndex,
+                            eventIndex,
+                            "title",
+                            e.target.value
+                          )
+                        }
+                      />
+                      <Textarea
+                        placeholder="Description"
+                        value={event.description}
+                        onChange={(e) =>
+                          handleChange(
+                            dayIndex,
+                            eventIndex,
+                            "description",
+                            e.target.value
+                          )
+                        }
+                      />
+                      <Input
+                        placeholder="Speaker (optional)"
+                        value={event.speaker || ""}
+                        onChange={(e) =>
+                          handleChange(
+                            dayIndex,
+                            eventIndex,
+                            "speaker",
+                            e.target.value
+                          )
+                        }
+                      />
+                      <Input
+                        placeholder="Location"
+                        value={event.location}
+                        onChange={(e) =>
+                          handleChange(
+                            dayIndex,
+                            eventIndex,
+                            "location",
+                            e.target.value
+                          )
+                        }
+                      />
+                      <div className="flex justify-end">
+                        <Button
+                          variant="destructive"
+                          onClick={() =>
+                            handleRemoveEvent(dayIndex, eventIndex)
+                          }
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+                <div className="flex justify-center">
+                  <Button onClick={() => handleAddEvent(dayIndex)}>
+                    Add Event
+                  </Button>
+                </div>
+                <div className="flex justify-center mt-6">
+                  <Button
+                    className="px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-xl"
+                    onClick={() => handleSaveDay(day.day, day.events)}
+                  >
+                    Save Changes
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+          ))}
+        </Tabs>
+      )}
     </div>
   );
 }
