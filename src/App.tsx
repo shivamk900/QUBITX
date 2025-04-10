@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
-import AdminSchedulePage from "./pages/AdminSchedulePage";
+import AdminDashboard from "./pages/AdminDashboard";
 import AdminRoute from "./pages/AdminRoute";
 import NotFound from "./pages/NotFound";
 
@@ -41,7 +41,7 @@ const App = () => {
                       path="/admin"
                       element={
                         <AdminRoute>
-                          <AdminSchedulePage />
+                          <AdminDashboard />
                         </AdminRoute>
                       }
                     />
