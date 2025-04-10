@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ScheduleAdminPanel from "./admin/AdminSchedulePage";
 import SpeakersAdminPanel from "./admin/SpeakersAdmin";
 import OrganizerAdminPanel from "./admin/OrganizersAdmin";
+import ProblemStatementAdminPanel from "./admin/ProblemStatementAdminPanel";
 
 const AdminDashboard = () => {
     return (
@@ -13,6 +14,7 @@ const AdminDashboard = () => {
               <TabsTrigger value="schedule">Schedule</TabsTrigger>
               <TabsTrigger value="speakers">Speakers</TabsTrigger>
               <TabsTrigger value="organizers">Organizers</TabsTrigger>
+              <TabsTrigger value="problem-statements">Problem Statements</TabsTrigger>
               {/* Add more sections here */}
             </TabsList>
     
@@ -28,6 +30,9 @@ const AdminDashboard = () => {
               <OrganizerAdminPanel />
             </TabsContent>
 
+            <TabsContent value="problem-statements">
+              <ProblemStatementAdminPanel />
+            </TabsContent>
 
           </Tabs>
         </div>

@@ -1,10 +1,34 @@
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { problemStatementsData } from '@/utils/data';
+import axios from 'axios';
+
+interface ProblemStatement {
+  _id: string;
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  color: string;
+}
+
+const API_URL = 'https://qubitx-backend.onrender.com/api/problemStates';
 
 const ProblemStatementSection = () => {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [problemStatements, setProblemStatements] = useState<ProblemStatement[]>([]);
+
+  useEffect(() => {
+    const fetchProblemStatements = async () => {
+      try {
+        const res = await axios.get(API_URL);
+        setProblemStatements(res.data);
+      } catch (err) {
+        console.error("Error fetching problem statements", err);
+      }
+    };
+
+    fetchProblemStatements();
+  }, []);
 
   return (
     <section id="challenges" className="py-24 relative overflow-hidden">
@@ -29,9 +53,9 @@ const ProblemStatementSection = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {problemStatementsData.map((challenge, index) => (
+          {problemStatements.map((challenge, index) => (
             <motion.div
-              key={challenge.id}
+              key={challenge._id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
