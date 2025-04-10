@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ScheduleAdminPanel from "./admin/AdminSchedulePage";
 import SpeakersAdminPanel from "./admin/SpeakersAdmin";
+import OrganizerAdminPanel from "./admin/OrganizersAdmin";
 
 const AdminDashboard = () => {
     return (
@@ -11,6 +12,7 @@ const AdminDashboard = () => {
             <TabsList className="flex flex-wrap justify-center gap-4">
               <TabsTrigger value="schedule">Schedule</TabsTrigger>
               <TabsTrigger value="speakers">Speakers</TabsTrigger>
+              <TabsTrigger value="organizers">Organizers</TabsTrigger>
               {/* Add more sections here */}
             </TabsList>
     
@@ -21,6 +23,12 @@ const AdminDashboard = () => {
             <TabsContent value="speakers">
               <SpeakersAdminPanel />
             </TabsContent>
+
+            <TabsContent value="organizers">
+              <OrganizerAdminPanel />
+            </TabsContent>
+
+
           </Tabs>
         </div>
       );

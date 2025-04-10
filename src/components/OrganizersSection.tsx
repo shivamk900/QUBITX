@@ -61,7 +61,7 @@ const OrganizersSection = () => {
   useEffect(() => {
     // Fetch organizers data from the API
     axios
-      .get("http://192.168.132.18:5000/api/organizers") // update the URL if hosted
+      .get("https://qubitx-backend.onrender.com/api/organizers") // update the URL if hosted
       .then((res) => setOrganizers(res.data))
       .catch((err) => console.error("Error fetching organizers:", err));
   }, []);
