@@ -1,6 +1,7 @@
-import { LinkedinIcon, TwitterIcon, GlobeIcon } from 'lucide-react';
-
 import { organizersData } from '@/utils/data';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { LinkedinIcon, TwitterIcon, GlobeIcon } from 'lucide-react';
 
 interface Social {
   linkedin?: string;
@@ -55,6 +56,16 @@ const OrganizerCard = ({ name, role, company, image, socials }: OrganizerProps) 
 };
 
 const OrganizersSection = () => {
+  const [organizers, setOrganizers] = useState([]);
+
+  useEffect(() => {
+    // Fetch organizers data from the API
+    axios
+      .get("http://192.168.132.18:5000/api/organizers") // update the URL if hosted
+      .then((res) => setOrganizers(res.data))
+      .catch((err) => console.error("Error fetching organizers:", err));
+  }, []);
+
   return (
     <section id="organizers" className="py-20 relative overflow-hidden">
       {/* Tech-themed background elements */}
@@ -79,7 +90,7 @@ const OrganizersSection = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {organizersData.map((organizer, index) => (
+          {organizers.map((organizer, index) => (
             <OrganizerCard key={index} {...organizer} />
           ))}
         </div>
