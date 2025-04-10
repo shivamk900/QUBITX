@@ -14,6 +14,7 @@ import ProblemStatementSection from '@/components/ProblemStatementSection';
 import OrganizersSection from '@/components/OrganizersSection';
 import ChatBot from '@/components/ChatBot';
 import RoundsSection from '@/components/RoundsSection';
+import CodeOfConduct from '@/components/CodeOfConduct';
 
 const Index = () => {
   useEffect(() => {
@@ -54,7 +55,8 @@ const Index = () => {
         <HeroScene />
         <NewCountdown />
         <AboutSection />
-        <RoundsSection /> Add this line
+        <CodeOfConduct /> {/* Add this line */}
+        <RoundsSection />
         <ProblemStatementSection />
         <ScheduleSection />
         <SpeakersSection />

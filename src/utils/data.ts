@@ -23,53 +23,53 @@ export const aboutData = [{
 }]
 
 // Rounds Data
+// Trophy is already imported in the About Section imports
+
 export const roundsData = [
-    {
-        number: 1,
-        title: "Ideation & Team Formation",
-        description:
-            "Submit your innovative project idea and form your dream team. Present your concept to mentors for initial feedback.",
-        timeline: "48 Hours",
-        icon: Users,
-        className: "w-6 h-6 text-neon-blue",
-        details: [
-            "Team registration & idea submission",
-            "Mentor matching & initial guidance",
-            "Project scope definition",
-            "Technical stack planning",
-        ],
-    },
-    {
-        number: 2,
-        title: "Development & Mentorship",
-        description:
-            "Build your prototype with continuous support from industry experts. Regular checkpoints to ensure you're on track.",
-        timeline: "72 Hours",
-        icon: Code,
-        className: "w-6 h-6 text-neon-purple",
-        details: [
-            "Intensive coding & development",
-            "One-on-one mentorship sessions",
-            "Technical workshops",
-            "Progress presentations",
-        ],
-    },
-    {
-        number: 3,
-        title: "Final Presentation & Judging",
-        description:
-            "Showcase your solution to our panel of judges. Demonstrate the impact and innovation of your project.",
-        timeline: "24 Hours",
-        icon: Trophy,
-        className: "w-6 h-6 text-neon-pink",
-        details: [
-            "Project demonstration",
-            "Technical documentation",
-            "Final presentation",
-            "Awards ceremony",
-        ],
-    },
-]
+  {
+    number: 1,
+    title: "Idea Submission Round",
+    description: "Submit your innovative project ideas through our online portal. Our expert panel will review and shortlist the most promising concepts.",
+    timeline: "Online Mode",
+    icon: Users,
+    className: "text-neon-blue",
+    details: [
+      "Submit detailed project proposal",
+      "Include technical requirements",
+      "Highlight innovation aspects",
+      "Team details submission"
+    ]
+  },
+  {
+    number: 2,
+    title: "Idea Presentation Round",
+    description: "Present your idea in person to our panel of experts. Demonstrate your project's feasibility and impact potential.",
+    timeline: "Offline Mode",
+    icon: Code,
+    className: "text-neon-purple",
+    details: [
+      "Live project presentation",
+      "Technical Q&A session",
+      "Feedback from experts",
+      "Shortlisting for finals"
+    ]
+  },
+  {
+    number: 3,
+    title: "Finale Judging Round",
+    description: "Final showcase of your completed project. Winners will be selected and announced based on innovation, execution, and impact.",
+    timeline: "Offline Mode",
+    icon: Trophy,
+    className: "text-neon-pink",
+    details: [
+      "Final project demonstration",
+      "Judge evaluation",
+      "Prize distribution",
+      "Closing ceremony"
+    ]
+  }
+];
+
 // Problem Statements Data
 export const problemStatementsData = [
     {
