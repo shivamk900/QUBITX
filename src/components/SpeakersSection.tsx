@@ -1,6 +1,7 @@
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { LinkedinIcon, TwitterIcon, GlobeIcon } from 'lucide-react';
-import { speakersDate } from '@/utils/data';
+
 const SpeakerCard = ({ name, role, company, image, socials }) => {
   return (
     <div className="group">
@@ -17,17 +18,17 @@ const SpeakerCard = ({ name, role, company, image, socials }) => {
           <p className="text-sm text-white/80">{company}</p>
           
           <div className="flex space-x-3 mt-3 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all">
-            {socials.linkedin && (
+            {socials?.linkedin && (
               <a href={socials.linkedin} className="text-white hover:text-neon-blue transition-colors">
                 <LinkedinIcon size={18} />
               </a>
             )}
-            {socials.twitter && (
+            {socials?.twitter && (
               <a href={socials.twitter} className="text-white hover:text-neon-purple transition-colors">
                 <TwitterIcon size={18} />
               </a>
             )}
-            {socials.website && (
+            {socials?.website && (
               <a href={socials.website} className="text-white hover:text-neon-pink transition-colors">
                 <GlobeIcon size={18} />
               </a>
@@ -40,13 +41,20 @@ const SpeakerCard = ({ name, role, company, image, socials }) => {
 };
 
 const SpeakersSection = () => {
+  const [speakers, setSpeakers] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://192.168.132.18:5000/api/speakers") // update the URL if hosted
+      .then((res) => setSpeakers(res.data))
+      .catch((err) => console.error("Error fetching speakers:", err));
+  }, []);
 
   return (
     <section id="speakers" className="py-20 relative">
-      {/* Decorative elements */}
       <div className="absolute top-1/3 right-0 w-80 h-80 bg-neon-pink/10 rounded-full filter blur-3xl"></div>
       <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-neon-blue/5 rounded-full filter blur-3xl"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col items-center text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -59,9 +67,9 @@ const SpeakersSection = () => {
             Learn from industry leaders and technology visionaries who are shaping the future of tech.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {speakersDate.map((speaker, index) => (
+          {speakers.map((speaker, index) => (
             <SpeakerCard key={index} {...speaker} />
           ))}
         </div>

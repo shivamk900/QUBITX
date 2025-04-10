@@ -1,6 +1,10 @@
 
 import { Shield, Zap, Code, Share2 } from 'lucide-react';
 import { aboutData } from '@/utils/data';
+
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 const FeatureCard = ({ icon: Icon, title, description }) => {
   return (
     <div className="bg-cyber-dark p-6 rounded-lg cyberpunk-border group hover:translate-y-[-5px] transition-all duration-300">
