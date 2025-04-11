@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast"; // Added useToast
 
 const ConductAdmin = () => {
+  const { toast } = useToast(); // Initialize useToast
   const [guidelines, setGuidelines] = useState([]);
   const [newGuideline, setNewGuideline] = useState({
     icon: "",
@@ -24,8 +26,10 @@ const ConductAdmin = () => {
     try {
       const res = await axios.get(API_URL);
       setGuidelines(res.data);
+      toast({ title: "Success", description: "Guidelines fetched successfully" }); // Success toast
     } catch (err) {
       console.error("Error fetching guidelines", err);
+      toast({ title: "Error", description: "Failed to fetch guidelines", variant: "destructive" }); // Error toast
     }
   };
 
@@ -34,8 +38,10 @@ const ConductAdmin = () => {
       const res = await axios.post(API_URL, newGuideline);
       setGuidelines([...guidelines, res.data]);
       setNewGuideline({ icon: "", color: "", title: "", description: "" });
+      toast({ title: "Success", description: "Guideline added successfully" }); // Success toast
     } catch (err) {
       console.error("Add failed", err);
+      toast({ title: "Error", description: "Failed to add guideline", variant: "destructive" }); // Error toast
     }
   };
 
@@ -43,8 +49,10 @@ const ConductAdmin = () => {
     try {
       const res = await axios.put(`${API_URL}/${id}`, updated);
       setGuidelines(guidelines.map((item) => (item._id === id ? res.data : item)));
+      toast({ title: "Success", description: "Guideline updated successfully" }); // Success toast
     } catch (err) {
       console.error("Update failed", err);
+      toast({ title: "Error", description: "Failed to update guideline", variant: "destructive" }); // Error toast
     }
   };
 
@@ -52,8 +60,10 @@ const ConductAdmin = () => {
     try {
       await axios.delete(`${API_URL}/${id}`);
       setGuidelines(guidelines.filter((item) => item._id !== id));
+      toast({ title: "Success", description: "Guideline deleted successfully" }); // Success toast
     } catch (err) {
       console.error("Delete failed", err);
+      toast({ title: "Error", description: "Failed to delete guideline", variant: "destructive" }); // Error toast
     }
   };
 

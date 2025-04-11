@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast"; // Added useToast
 
 interface Speaker {
   _id?: string;
@@ -20,14 +21,17 @@ interface Speaker {
 const API_URL = 'https://qubitx-backend.onrender.com/api/speakers';
 
 export default function SpeakerAdminPanel() {
+  const { toast } = useToast(); // Initialize useToast
   const [speakers, setSpeakers] = useState<Speaker[]>([]);
 
   const fetchSpeakers = async () => {
     try {
       const res = await axios.get(API_URL);
       setSpeakers(res.data);
+      toast({ title: "Success", description: "Speakers fetched successfully" }); // Success toast
     } catch (err) {
       console.error("Error fetching speakers", err);
+      toast({ title: "Error", description: "Failed to fetch speakers", variant: "destructive" }); // Error toast
     }
   };
 
@@ -81,9 +85,10 @@ export default function SpeakerAdminPanel() {
     if (speaker._id) {
       try {
         await axios.delete(`${API_URL}/${speaker._id}`);
+        toast({ title: "Success", description: "Speaker removed successfully" }); // Success toast
       } catch (err) {
         console.error("Error deleting speaker", err);
-        alert("Failed to delete speaker from server.");
+        toast({ title: "Error", description: "Failed to delete speaker", variant: "destructive" }); // Error toast
         return;
       }
     }
@@ -101,10 +106,10 @@ export default function SpeakerAdminPanel() {
         updatedSpeakers[index]._id = res.data._id;
         setSpeakers(updatedSpeakers);
       }
-      alert("Speaker saved successfully!");
+      toast({ title: "Success", description: "Speaker saved successfully" }); // Success toast
     } catch (err) {
       console.error("Error saving speaker", err);
-      alert("Failed to save speaker.");
+      toast({ title: "Error", description: "Failed to save speaker", variant: "destructive" }); // Error toast
     }
   };
 

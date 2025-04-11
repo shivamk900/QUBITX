@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast"; // Added useToast
 
 interface Sponsor {
   _id?: string;
@@ -16,6 +17,7 @@ interface Sponsor {
 const API_URL = "https://qubitx-backend.onrender.com/api/sponsors"; // Replace with your actual backend
 
 export default function SponsorAdminPanel() {
+  const { toast } = useToast(); // Initialize useToast
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
 
   useEffect(() => {
@@ -29,8 +31,10 @@ export default function SponsorAdminPanel() {
         res.data
       ).flat() as Sponsor[];
       setSponsors(flatSponsors);
+      toast({ title: "Success", description: "Sponsors fetched successfully" }); // Success toast
     } catch (err) {
       console.error("Error fetching sponsors", err);
+      toast({ title: "Error", description: "Failed to fetch sponsors", variant: "destructive" }); // Error toast
     }
   };
 
@@ -62,9 +66,10 @@ export default function SponsorAdminPanel() {
     if (sponsor._id) {
       try {
         await axios.delete(`${API_URL}/${sponsor._id}`);
+        toast({ title: "Success", description: "Sponsor removed successfully" }); // Success toast
       } catch (err) {
         console.error("Error deleting sponsor", err);
-        alert("Failed to delete sponsor.");
+        toast({ title: "Error", description: "Failed to delete sponsor", variant: "destructive" }); // Error toast
         return;
       }
     }
@@ -81,18 +86,10 @@ export default function SponsorAdminPanel() {
         updated[index]._id = res.data._id;
         setSponsors(updated);
       }
-
-      alert("Saved successfully!");
+      toast({ title: "Success", description: "Sponsor saved successfully" }); // Success toast
     } catch (err: any) {
       console.error("Error saving sponsor", err);
-      if (err.response) {
-        console.log("Response data:", err.response.data);
-        alert(
-          `Failed to save. ${err.response.data.message || "Check the logs."}`
-        );
-      } else {
-        alert("Failed to save. Check the console for details.");
-      }
+      toast({ title: "Error", description: "Failed to save sponsor", variant: "destructive" }); // Error toast
     }
   };
 
