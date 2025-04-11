@@ -107,7 +107,7 @@ const RegisterSection = () => {
               
               <div className="relative aspect-square overflow-hidden rounded-md">
                 <img 
-                  src="public/QUBITX Logo.png" 
+                  src="src/assets/QUBITX Logo.png" 
                   alt="QUBITX-GLBM 2025 Hackathon Poster" 
                   className="w-full h-full object-cover"
                   onError={(e) => {

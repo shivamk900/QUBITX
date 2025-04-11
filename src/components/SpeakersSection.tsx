@@ -45,7 +45,7 @@ const SpeakersSection = () => {
 
   useEffect(() => {
     axios
-      .get("http://192.168.132.18:5000/api/speakers") // update the URL if hosted
+      .get("https://qubitx-backend.onrender.com/api/speakers") // update the URL if hosted
       .then((res) => setSpeakers(res.data))
       .catch((err) => console.error("Error fetching speakers:", err));
   }, []);
