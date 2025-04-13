@@ -4,6 +4,8 @@ import SpeakersAdminPanel from "./admin/SpeakersAdmin";
 import OrganizerAdminPanel from "./admin/OrganizersAdmin";
 import ProblemStatementAdminPanel from "./admin/ProblemStatementAdminPanel";
 import AdminSponsorsPanel from "./admin/AdminSponsorsPanel";
+import ConductAdmin from "./admin/ConductAdmin";
+import EventAdmin from "./admin/EventAdmin";
 const AdminDashboard = () => {
     return (
         <div className="max-w-6xl mx-auto py-12 px-4">
@@ -16,6 +18,8 @@ const AdminDashboard = () => {
               <TabsTrigger value="organizers">Organizers</TabsTrigger>
               <TabsTrigger value="problem-statements">Problem Statements</TabsTrigger>
               <TabsTrigger value="sponsors">Sponsors</TabsTrigger>
+              <TabsTrigger value="codeofconduct">Code Of Conduct</TabsTrigger>
+              <TabsTrigger value="event">Event</TabsTrigger>
               {/* Add more sections here */}
             </TabsList>
     
@@ -37,6 +41,14 @@ const AdminDashboard = () => {
 
             <TabsContent value="sponsors">
               <AdminSponsorsPanel />
+            </TabsContent>
+
+            <TabsContent value="codeofconduct">
+              <ConductAdmin />
+            </TabsContent>
+
+            <TabsContent value="event">
+              <EventAdmin />
             </TabsContent>
 
           </Tabs>

@@ -1,39 +1,35 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 import { Shield, Users, Heart, AlertCircle, Clock } from 'lucide-react';
 
+const iconMap = {
+  Shield: <Shield className="w-6 h-6 text-neon-blue" />,
+  Users: <Users className="w-6 h-6 text-neon-purple" />,
+  Heart: <Heart className="w-6 h-6 text-neon-pink" />,
+  Clock: <Clock className="w-6 h-6 text-neon-cyan" />,
+  AlertCircle: <AlertCircle className="w-6 h-6 text-neon-red" />,
+};
+
 const CodeOfConduct = () => {
-  const guidelines = [
-    {
-      icon: <Shield className="w-6 h-6 text-neon-blue" />,
-      title: "Respect and Inclusion",
-      description: "Treat everyone with dignity, kindness, and respect. Harassment, bullying, or discrimination of any form is strictly prohibited. Use respectful language and create an inclusive atmosphere for everyone."
-    },
-    {
-      icon: <Users className="w-6 h-6 text-neon-purple" />,
-      title: "Teamwork & Fair Play",
-      description: "Teams must consist of 2 to 4 members. All project development must occur during the 24-hour hackathon. Collaboration is encouraged, but plagiarism will lead to disqualification."
-    },
-    {
-      icon: <Heart className="w-6 h-6 text-neon-pink" />,
-      title: "Health, Safety & Conduct",
-      description: "Your well-being matters. Take breaks, stay hydrated, and rest when needed. Keep the venue clean and respect shared resources. Report any misconduct immediately."
-    },
-    {
-      icon: <Clock className="w-6 h-6 text-neon-cyan" />,
-      title: "Project Submission",
-      description: "Submit projects before the deadline. Follow submission guidelines including GitHub repo, presentation format, and demo link. Clearly mention tech stack and team details."
-    },
-    {
-      icon: <AlertCircle className="w-6 h-6 text-neon-red" />,
-      title: "Zero Tolerance Policy",
-      description: "We do not tolerate harassment, discrimination, cheating, or intentional disruption. Violations may result in immediate disqualification and removal from the venue."
-    }
-  ];
+  const [guidelines, setGuidelines] = useState([]);
+
+  useEffect(() => {
+    const fetchGuidelines = async () => {
+      try {
+        const res = await axios.get('https://qubitx-backend.onrender.com/api/codeofconduct');
+        setGuidelines(res.data);
+      } catch (error) {
+        console.error('Failed to fetch guidelines:', error);
+      }
+    };
+    fetchGuidelines();
+  }, []);
 
   return (
     <section id="conduct" className="py-20 relative overflow-hidden">
       <div className="container mx-auto px-4">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -63,7 +59,7 @@ const CodeOfConduct = () => {
               <div className="bg-cyber-dark/40 backdrop-blur-sm rounded-xl p-8 border border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-300 h-full">
                 <div className="flex flex-col space-y-4">
                   <div className="p-3 bg-cyber-darker rounded-lg w-fit">
-                    {guideline.icon}
+                    {iconMap[guideline.icon] || <Shield className="w-6 h-6" />}
                   </div>
                   <h3 className="text-xl font-bold text-white">
                     {guideline.title}
@@ -77,8 +73,6 @@ const CodeOfConduct = () => {
           ))}
         </div>
       </div>
-
-      {/* Background elements remain the same */}
     </section>
   );
 };

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast"; // Added useToast
 
 interface Organizer {
   _id?: string;
@@ -19,14 +20,17 @@ interface Organizer {
 const API_URL = 'https://qubitx-backend.onrender.com/api/organizers';
 
 export default function OrganizerAdminPanel() {
+  const { toast } = useToast(); // Initialize useToast
   const [organizers, setOrganizers] = useState<Organizer[]>([]);
 
   const fetchOrganizers = async () => {
     try {
       const res = await axios.get(API_URL);
       setOrganizers(res.data);
+      toast({ title: "Success", description: "Organizers fetched successfully" }); // Success toast
     } catch (err) {
       console.error("Error fetching organizers", err);
+      toast({ title: "Error", description: "Failed to fetch organizers", variant: "destructive" }); // Error toast
     }
   };
 
@@ -78,9 +82,10 @@ export default function OrganizerAdminPanel() {
     if (org._id) {
       try {
         await axios.delete(`${API_URL}/${org._id}`);
+        toast({ title: "Success", description: "Organizer removed successfully" }); // Success toast
       } catch (err) {
         console.error("Error deleting organizer", err);
-        alert("Failed to delete organizer from server.");
+        toast({ title: "Error", description: "Failed to delete organizer", variant: "destructive" }); // Error toast
         return;
       }
     }
@@ -98,10 +103,10 @@ export default function OrganizerAdminPanel() {
         updated[index]._id = res.data._id;
         setOrganizers(updated);
       }
-      alert("Organizer saved successfully!");
+      toast({ title: "Success", description: "Organizer saved successfully" }); // Success toast
     } catch (err) {
       console.error("Error saving organizer", err);
-      alert("Failed to save organizer.");
+      toast({ title: "Error", description: "Failed to save organizer", variant: "destructive" }); // Error toast
     }
   };
 

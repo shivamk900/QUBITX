@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast"; // Added useToast
 
 interface ProblemStatement {
   _id?: string;
@@ -16,6 +17,7 @@ interface ProblemStatement {
 const API_URL = "https://qubitx-backend.onrender.com/api/problemStates";
 
 export default function ProblemStatementAdminPanel() {
+  const { toast } = useToast(); // Initialize useToast
   const [statements, setStatements] = useState<ProblemStatement[]>([]);
 
   useEffect(() => {
@@ -26,8 +28,10 @@ export default function ProblemStatementAdminPanel() {
     try {
       const res = await axios.get(API_URL);
       setStatements(res.data);
+      toast({ title: "Success", description: "Problem statements fetched successfully" }); // Success toast
     } catch (err) {
       console.error("Error fetching problem statements", err);
+      toast({ title: "Error", description: "Failed to fetch problem statements", variant: "destructive" }); // Error toast
     }
   };
 
@@ -59,9 +63,10 @@ export default function ProblemStatementAdminPanel() {
     if (statement._id) {
       try {
         await axios.delete(`${API_URL}/${statement._id}`);
+        toast({ title: "Success", description: "Problem statement removed successfully" }); // Success toast
       } catch (err) {
         console.error("Error deleting problem statement", err);
-        alert("Failed to delete problem statement.");
+        toast({ title: "Error", description: "Failed to delete problem statement", variant: "destructive" }); // Error toast
         return;
       }
     }
@@ -78,10 +83,10 @@ export default function ProblemStatementAdminPanel() {
         updated[index]._id = res.data._id;
         setStatements(updated);
       }
-      alert("Saved successfully!");
+      toast({ title: "Success", description: "Problem statement saved successfully" }); // Success toast
     } catch (err) {
       console.error("Error saving problem statement", err);
-      alert("Failed to save.");
+      toast({ title: "Error", description: "Failed to save problem statement", variant: "destructive" }); // Error toast
     }
   };
 

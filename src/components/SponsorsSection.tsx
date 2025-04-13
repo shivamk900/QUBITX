@@ -21,47 +21,53 @@ const SponsorLogo = ({ src, alt, tier }: any) => {
   );
 };
 
-const tierMeta: Record<
-  string,
-  { title: string; color: string; gridCols: string }
-> = {
-  title: {
-    title: "Title Sponsors",
-    color: "text-neon-yellow",
-    gridCols: "grid-cols-1",
-  },
-  diamond: {
-    title: "Diamond Sponsors",
-    color: "text-neon-green",
-    gridCols: "grid-cols-1 md:grid-cols-2",
-  },
-  platinum: {
-    title: "Platinum Sponsors",
-    color: "text-neon-silver",
-    gridCols: "grid-cols-1 md:grid-cols-2",
-  },
-  gold: {
-    title: "Gold Sponsors",
-    color: "text-neon-cyan",
-    gridCols: "grid-cols-1 md:grid-cols-2",
-  },
-  silver: {
-    title: "Silver Sponsors",
-    color: "text-neon-blue",
-    gridCols: "grid-cols-2 md:grid-cols-3 lg:grid-cols-6",
-  },
-};
-
 const SponsorsSection = () => {
   const [sponsorTiers, setSponsorTiers] = useState<
     { tier: string; sponsors: { src: string; alt: string }[] }[]
   >([]);
+  const tierMeta: Record<
+    string,
+    { title: string; color: string; gridCols: string }
+  > = {
+    title: {
+      title: "Title Sponsors",
+      color: "text-neon-yellow",
+      gridCols: `grid-cols-${Math.max(sponsorTiers.find(t => t.tier === "title")?.sponsors.length || 1, 1)}`,
+    },
+    diamond: {
+      title: "Diamond Sponsors",
+      color: "text-neon-green",
+      gridCols: `grid-cols-${Math.max(sponsorTiers.find(t => t.tier === "diamond")?.sponsors.length || 1, 1)}`,
+    },
+    platinum: {
+      title: "Platinum Sponsors",
+      color: "text-neon-silver",
+      gridCols: `grid-cols-${Math.max(sponsorTiers.find(t => t.tier === "platinum")?.sponsors.length || 1, 1)}`,
+    },
+    gold: {
+      title: "Gold Sponsors",
+      color: "text-neon-cyan",
+      gridCols: `grid-cols-${Math.max(sponsorTiers.find(t => t.tier === "gold")?.sponsors.length || 1, 1)}`,
+    },
+    silver: {
+      title: "Silver Sponsors",
+      color: "text-neon-blue",
+      gridCols: `grid-cols-${Math.max(sponsorTiers.find(t => t.tier === "silver")?.sponsors.length || 1, 1)}`,
+    },
+    bronze: {
+      title: "Bronze Sponsors",
+      color: "text-neon-blue",
+      gridCols: `grid-cols-${Math.max(sponsorTiers.find(t => t.tier === "bronze")?.sponsors.length || 1, 1)}`,
+    },
+  };
 
   // Assuming SponsorLogo & tierMeta defined as you posted
   useEffect(() => {
     const fetchSponsors = async () => {
       try {
-        const res = await axios.get("https://qubitx-backend.onrender.com/api/sponsors");
+        const res = await axios.get(
+          "https://qubitx-backend.onrender.com/api/sponsors"
+        );
 
         // Convert object to array of { tier, sponsors }
 

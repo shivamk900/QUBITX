@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/components/ui/use-toast"; // Added useToast
 
 interface ScheduleEvent {
   time: string;
@@ -22,6 +23,7 @@ interface ScheduleData {
 const API_URL = 'https://qubitx-backend.onrender.com/api/schedule';
 
 export default function ScheduleAdminPanel() {
+  const { toast } = useToast(); // Initialize useToast
   const [scheduleData, setScheduleData] = useState<ScheduleData[]>([]);
   const [newDay, setNewDay] = useState("");
 
@@ -29,8 +31,10 @@ export default function ScheduleAdminPanel() {
     try {
       const res = await axios.get(API_URL);
       setScheduleData(res.data);
+      toast({ title: "Success", description: "Schedule fetched successfully" }); // Success toast
     } catch (err) {
       console.error("Error fetching schedule", err);
+      toast({ title: "Error", description: "Failed to fetch schedule", variant: "destructive" }); // Error toast
     }
   };
 
@@ -69,13 +73,11 @@ export default function ScheduleAdminPanel() {
 
   const handleSaveDay = async (day: string, events: ScheduleEvent[]) => {
     try {
-      await axios.put(`${API_URL}/${day}`, {
-        events,
-      });
-      alert(`Schedule for ${day} updated successfully!`);
+      await axios.put(`${API_URL}/${day}`, { events });
+      toast({ title: "Success", description: `Schedule for ${day} updated successfully` }); // Success toast
     } catch (err) {
       console.error("Error updating schedule", err);
-      alert("Failed to update schedule.");
+      toast({ title: "Error", description: "Failed to update schedule", variant: "destructive" }); // Error toast
     }
   };
 
@@ -99,16 +101,13 @@ export default function ScheduleAdminPanel() {
     if (!window.confirm(`Are you sure you want to delete ${day}?`)) return;
   
     try {
-      // Optional: call your backend delete route
       await axios.delete(`${API_URL}/${day}`);
+      setScheduleData((prev) => prev.filter((d) => d.day !== day));
+      toast({ title: "Success", description: `Day ${day} removed successfully` }); // Success toast
     } catch (err) {
       console.error("Error deleting day", err);
-      alert("Failed to delete day from server.");
-      return;
+      toast({ title: "Error", description: "Failed to delete day", variant: "destructive" }); // Error toast
     }
-  
-    // Update local state
-    setScheduleData((prev) => prev.filter((d) => d.day !== day));
   };  
 
   const handleAdminAccess = async () => {
