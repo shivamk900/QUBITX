@@ -55,11 +55,7 @@ const Index = () => {
         <HeroScene />
         <NewCountdown />
         <AboutSection />
-<<<<<<< HEAD
         <CodeOfConduct /> {/* Add this line */}
-=======
-        <CodeOfConduct />
->>>>>>> e9f8ffefa7b71e27211b6ce3c9726a328984c2a6
         <RoundsSection />
         <ProblemStatementSection />
         <ScheduleSection />
