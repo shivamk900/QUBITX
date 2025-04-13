@@ -9,7 +9,6 @@ import Index from "./pages/Index";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminRoute from "./pages/AdminRoute";
 import NotFound from "./pages/NotFound";
-import LoadingSpinner from "@/contexts/LoadingSpinner";
 import axios from "axios";
 
 // Create a client
