@@ -12,12 +12,11 @@ interface Social {
 interface OrganizerProps {
   name: string;
   role: string;
-  company: string;
   image: string;
   socials: Social;
 }
 
-const OrganizerCard = ({ name, role, company, image, socials }: OrganizerProps) => {
+const OrganizerCard = ({ name, role, image, socials }: OrganizerProps) => {
   return (
     <div className="group">
       <div className="relative overflow-hidden rounded-lg mb-4 cyberpunk-border">
@@ -25,13 +24,11 @@ const OrganizerCard = ({ name, role, company, image, socials }: OrganizerProps) 
         <img 
           src={image} 
           alt={name} 
-          className="w-full aspect-[3/4] object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
+          className="w-full aspect-[3/4]  object-center transform group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
           <h3 className="text-xl font-bold text-white">{name}</h3>
           <p className="text-neon-cyan">{role}</p>
-          <p className="text-sm text-white/80">{company}</p>
-          
           <div className="flex space-x-3 mt-3 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all">
             {socials.linkedin && (
               <a href={socials.linkedin} className="text-white hover:text-neon-blue transition-colors">
