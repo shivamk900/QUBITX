@@ -31,14 +31,12 @@ const AdminCountdown = () => {
       toast({
         title: "Success",
         description: "Countdown end date updated successfully!",
-        status: "success",
       }); // Replaced alert with toast
     } catch (err) {
       console.error("Failed to update countdown date", err);
       toast({
         title: "Error",
         description: "Failed to save countdown end date.",
-        status: "error",
       }); // Replaced alert with toast
     }
   };
