@@ -24,7 +24,7 @@ const OrganizerCard = ({ name, role, image, socials }: OrganizerProps) => {
         <img 
           src={image} 
           alt={name} 
-          className="w-full aspect-[3/4]  object-center transform group-hover:scale-105 transition-transform duration-500"
+          className="w-full aspect-[3/4]  object-center transform group-hover:scale-105 transition-transform duration-500 object-contain"
         />
         <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
           <h3 className="text-xl font-bold text-white">{name}</h3>
